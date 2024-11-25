@@ -13,6 +13,5 @@ fun largerNumber(num1: Int, num2: Int): Int = max(num1,num2)
 2. 由于max()函数返回的是一个Int值,而我们在largerNumber()函数的尾部返回必然也是一个Int值，可以不再显示的申明返回值类型
 fun largerNumber(num1: Int, num2: Int) = max(num1,num2)
 
-if条件语句
 
 
