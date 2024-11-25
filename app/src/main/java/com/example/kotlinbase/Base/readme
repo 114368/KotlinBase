@@ -1,0 +1,15 @@
+变量
+val(value的缩写) 用来申明一个不可变的变量
+var(variable)用来申明一个可变的变量
+
+val a: Int = 10
+
+函数
+fun methodName(param1: Int, param2: Int): Int {
+    return 0
+}
+1. 当一个函数中只有一行代码时，Kotlin允许我们不必编写函数体,可以直接将唯一的一行代码写在函数定义的尾部,中间用等号连接即可
+fun largerNumber(num1: Int, num2: Int): Int = max(num1,num2)
+2. 由于max()函数返回的是一个Int值,而我们在largerNumber()函数的尾部返回必然也是一个Int值，可以不再显示的申明返回值类型
+fun largerNumber(num1: Int, num2: Int) = max(num1,num2)
+
