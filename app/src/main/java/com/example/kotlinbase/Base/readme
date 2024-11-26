@@ -13,4 +13,80 @@ fun largerNumber(num1: Int, num2: Int): Int = max(num1,num2)
 2. 由于max()函数返回的是一个Int值,而我们在largerNumber()函数的尾部返回必然也是一个Int值，可以不再显示的申明返回值类型
 fun largerNumber(num1: Int, num2: Int) = max(num1,num2)
 
-if函数
+if条件语句
+fun largerNumber(num1: Int, num2: Int): Int{
+    var valu = 0
+    if(num1 > num2){
+        value = num1
+    }else{
+        value - num2
+    }
+    return value
+}
+
+1. Kotlin中的if语句相比于java有一个额外的功能,它可以有返回值的,返回值就是if 语句每一个条件中最后一行代码的返回值.
+fun largerNumber(num1: Int, num2: Int): Int{
+    val value = if(num1 > num2){
+         num1
+    }else{
+        num2
+    }
+    return value
+}
+2.  fun largerNumber(num1: Int, num2: Int) = if(num1 > num2) {
+    num1
+}else{
+    num2
+}
+3. fun largerNumber(num1: Int, num2: Int) = if(num1 > num2) num1 else num2
+
+when条件语句
+匹配值 -> { 逻辑执行 }
+当你的执行逻辑只有一行代码时,{ }可以省略
+fun getScore(name: String) = when (name){
+    "tom" -> 86
+    "jim" -> 77
+    "jack" -> 100
+    else -> 0
+}
+
+循环语句
+val range = 0..10  ->[0,10]
+for(i in 0..10){
+    println(i)
+}
+
+val range = 0 until 10  ->[0,10)
+for(i in 0 until 10 step 2){
+    println(i)
+}
+
+val range = 10 downTo 1 ->[10,1]
+for(i in 10 downTo 1){
+    println(i)
+}
+
+类和对象
+val p = Person()
+
+父类  open class Person {
+}
+加上open关键字之后,我们就是在主动告诉Kotlin编译器,Person这个类是专门为继承而设计的，这样Person类就允许被继承了
+class Student : Person() {
+}
+kotlin给我们提供了一个init结构体,所有的主构造函数中的逻辑都可以写在里面
+在主构造函数中申明成val或者var的参数将自动成为该类的字段，这就会导致和父类中同名的name和age字段造成冲突
+class Student(val sno: Srting,val grade: String) : Person() {
+    init{
+        println("sno is " + sno)
+        println("grade is " + grade)
+    }
+}
+接口 interface Study{
+}
+
+数据类 data class Cellphone(val brand: String, val price: Double){
+}
+单例类 object Singleton{
+}
+
