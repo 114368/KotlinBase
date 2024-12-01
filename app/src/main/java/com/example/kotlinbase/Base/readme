@@ -90,3 +90,124 @@ class Student(val sno: Srting,val grade: String) : Person() {
 单例类 object Singleton{
 }
 
+Lambda编程
+集合 list:
+val list = listOf("Apple", "Banana", "Orange", "Pear", "Grape")
+listOf()函数创建的是一个不可变的集合,不可变的集合指的就是该集合只能用于读取,我们无法对集合进行添加,修改,或删除操作
+可变的集合 val list = mutableListOf("Apple", "Banana", "Orange", "Pear", "Grape")
+集合 set:
+val list = setOf("Apple", "Banana", "Orange", "Pear", "Grape")
+set集合底层是使用hash映射机制来存放数据的,因此集合中的元素无法保证有序
+Map:
+val map = mapOf("Apple" to 1, "Banana" to 2, "Orange" to 3, "Pear" to 4, "Grape" to 5)
+for((fruit,number) in map){
+    println("fruit:"+fruit + " number"+number)
+}
+可变的map val map = mutableMapOf("Apple" to 1, "Banana" to 2, "Orange" to 3, "Pear" to 4, "Grape" to 5)
+
+函数式API
+lambda表达式的语法结构
+{参数名1: 参数类型, 参数名2: 参数类型 ->函数体}
+
+maxBy
+接收的是一个lambda类型的参数,并且会在遍历集合时将每次遍历的值作为参数传递给lambda表达式。maxBy函数的工作原理是根据我们
+传入的条件来遍历集合，从而找到该条件下的最大值
+val list = mutableListOf("Apple", "Banana", "Orange", "Pear", "Grape", "Watermelon")
+val lambda = { fruit: String -> fruit.length}
+val maxLengthFruit = list.maxBy(lambda)
+简化 ->
+1. 当lambda参数是函数的最后一个参数时,可以将lambda表达式移到函数括号的外面
+val maxLengthFruit = list.maxBy(){ fruit: String -> fruit.length}
+2. 当lambda参数是函数的唯一一个参数的话
+val maxLengthFruit = list.maxBy { fruit: String -> fruit.length}
+3. 由于Kotlin拥有出色的类型推导机制,lambda表达式的参数列表其实在大多数情况下不必申明参数类型
+val maxLengthFruit = list.maxBy { fruit -> fruit.length}
+4. 当lambda表达式的参数类表中只有一个参数时,也不必声明参数名,而是可以使用it关键字来代替
+val maxLengthFruit = list.maxBy { it.length}
+
+map
+集合中的map函数是最常用的一种函数式api，它用于将集合中的每个元素都映射成一个另外的值，映射的规则在lambda表达式中指定
+最终生成一个新的集合
+val list = mutableListOf("Apple", "Banana", "Orange", "Pear", "Grape", "Watermelon")
+val newList = list.map { it.toUpperCase() }
+for ( fruit in newList){
+    println(fruit)
+}
+
+filter
+函数是用来过滤集合中的数据的,它可以单独使用,也可以配合map函数一起使用
+val list = mutableListOf("Apple", "Banana", "Orange", "Pear", "Grape", "Watermelon")
+val newList = list.map { it.toUpperCase() }
+
+any和all
+其中any函数用于判断集合中是否至少存在一个元素满足指定条件,all 函数用于判断集合中是否所有元素都满足指定条件
+val list = mutableListOf("Apple", "Banana", "Orange", "Pear", "Grape", "Watermelon")
+val anyResult = list.any { it.length <= 5 }
+val allResult = list.all { it.length <= 5 }
+
+java函数式API的使用
+在kotlin中调用java方法时也可以使用函数式api,只不过这是有一定条件限制的，具体来讲,如果我们在kotlin代码中调用了一个
+java方法,并且该方法接受一个java单抽象方法接口参数,就可以使用函数式api,java单抽象方法接口指的是接口中只有一个待实现
+方法，如果接口中有多个待实现方法,则无法使用函数式api
+public interface Runnable(){
+    void run();
+}
+new Thread(new Runnable(){
+    @Override
+    public void run(){
+
+    }
+}).start();
+如果将这段代码翻译成kotlin版本
+Thread(object : Runnable{
+        override fun run() {
+            TODO("Not yet implemented")
+        }
+    }).start()
+kotlin中匿名类的写法和java有一点区别,由于kotlin完全舍弃了new关键字,因此创建匿名类实例的时候就不能再使用new了，而是
+改用了object关键字
+Thread(Runnable {
+
+}).start()
+因为Runnable类中只有一个待实现方法，即使这里没有显示地重写run()方法，kotlin也能自动明白Runnable后面的lambda表示式
+就是在run()方法中实现的内容
+
+另外如果一个java方法的参数列表中不存在一个以上java单抽象方法接口参数,我们还可以将接口名进行省略
+Thread({
+
+}).start()
+当lambda表达式是方法的最后一个参数时,可以将lambda表示式移到方法括号的外面,同时如果lambda表达式还是方法的唯一参数,
+还可以将方法的括号省略
+Thread{
+
+}.start()
+
+空指针检查
+kotlin将空指针异常的检查提前到了编译时期
+在类名的后面加上一个问号。Int?表示可为空的整形,String?就表示可为空的字符串
+判空辅助工具
+?. 操作符 表示当对象不为空时正常调用相应的方法,当对象为空时则什么都不做.
+a?.doSomething()
+?: 操作符 这个操作符的左右两边都接受一个表达式,如果左边表达式的结果不为空就返回左边表达式的结果，否则就返回右边表示式的结果
+val c = a ?: b
+:: 操作符 强行通过编译
+
+let
+let既不是操作符,也不是什么关键字,而是一个函数,这个函数提供了函数式api的编程接口,并将原始调用对象作为参数传递到lambda
+表达式中
+obj,let{ obj2 ->
+    //编写具体的业务逻辑
+}
+study?.let{
+    it.readBook()
+    it.doHonework()
+}
+
+字符串内嵌表达式
+"hello, ${obj.name}. nice to meet you"
+
+函数的参数默认值
+fun printParams(num: Int, str: String = "hello"){
+    print("num is $num,str is $str")
+}
+
