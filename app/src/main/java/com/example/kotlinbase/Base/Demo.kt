@@ -33,12 +33,34 @@ fun main(){
     /*Thread{
 
     }.start()*/
-    printParams(12,str2 =  "sss")
+    //printParams(12,str2 =  "sss")
+
+    /*val list = listOf("Apple", "Banana", "Orange", "Pear", "Grape", "Watermelon")
+    val result = with(StringBuilder()) {
+        append("Start eat fruits.\n")
+        for(fruit in list){
+            append(fruit).append("\n")
+        }
+        append("Ate all fruits.")
+        toString()
+    }
+    println(result)*/
+    val list = listOf("Apple", "Banana", "Orange", "Pear", "Grape", "Watermelon")
+    val result = StringBuilder().run{
+        append("Start eat fruits.\n")
+        for(fruit in list){
+            append(fruit).append("\n")
+        }
+        append("Ate all fruits.")
+        toString()
+    }
+    println(result)
 }
 
 fun printParams(num: Int = 10, str: String = "aaa", str2: String){
     println("num= $num, str= $str, str2 = $str2")
 }
+
 
 class Demo {
 

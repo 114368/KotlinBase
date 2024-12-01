@@ -211,3 +211,42 @@ fun printParams(num: Int, str: String = "hello"){
     print("num is $num,str is $str")
 }
 
+with
+with函数接受两个参数,第一个参数可以是一个任意类型的对象，第二个参数是一个lambda表达式.with函数会在lambda表达式中
+提供第一个参数对象的上下文,并使用lambda表达式中的最后一行代码作为返回值返回
+val result= = with(obj) {
+    //这里式obj的上下文
+    "value" //with函数的返回值
+}
+val list = listOf("Apple", "Banana", "Orange", "Pear", "Grape", "Watermelon")
+    val result = with(StringBuilder()) {
+        append("Start eat fruits.\n")
+        for(fruit in list){
+            append(fruit).append("\n")
+        }
+        append("Ate all fruits.")
+        toString()
+    }
+println(result)
+
+run
+run函数的用法和使用场景其实和with函数是非常类似的,知识稍微做了一些语法改动而已,首先run函数是不能直接调用的。而是要调用
+某个对象的run函数才行，其次run函数只接受一个Lambda参数，并且会在lambda表达式中提供调用对象的上下文,其他方面和with函数
+是一样的,包括也会使用lambda表达式中的最后一行代码作为返回值返回
+val result = obj.run{
+    //这里式obj的上下文
+    "value" //run函数的参会值
+}
+
+apply
+apply函数和run函数也是极其类似的,都是在某个对象上调用,并且只接收一个lambda参数,也会在lambda表达式中提供调用对象的
+上下文,但是apply函数无法指定返回值,而是会自动返回调用对象本身
+val result = obj.apply{
+    //这里式obj的上下文
+}
+// result == obj
+
+定义静态方法
+1. companion object这个关键字实际上会在类内部船舰一个伴生类
+2. 利用注解 @jvmStaic 只能加在单例类 或 companion object中的方法上
+3. 顶层方法, 顶层方法指的是那些没有定义在任何类中的方法,Kotlin编译器会将所有的顶层方法全部编译成静态方法
