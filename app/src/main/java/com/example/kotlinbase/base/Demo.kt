@@ -1,4 +1,4 @@
-package com.example.kotlinbase.Base
+package com.example.kotlinbase.base
 
 fun main(){
     /*val range = 0..10
