@@ -58,10 +58,19 @@ fun main(args: Array<String>){
     /*val numbers = intArrayOf(1, 2, 3)
     val oceans = listOf("Atlantic", "Pacific")
     val oddList = listOf(numbers, oceans, "salmon")*/
-    //println("hello ${args[0]}")
-    val a = arrayOf(1, 2, 3)
+
+    //println("hello ${args[0]}--------${args[1]}")
+
+   /* val a = arrayOf(1, 2, 3)
     val list = asList(-1, 0, *a, 4)
-    println(list.toList())
+    println(list.toList())*/
+
+    println("main start")
+    val str = ""
+    printString(str){ s ->
+        println("lambda start")
+        println("lambda end")
+    }
 }
 
 fun <T> asList(vararg ts: T): List<T> {
@@ -73,6 +82,12 @@ fun <T> asList(vararg ts: T): List<T> {
 
 fun printParams(num: Int = 10, str: String = "aaa", str2: String){
     println("num= $num, str= $str, str2 = $str2")
+}
+
+fun printString(str: String, block: (String) -> Unit){
+    println("printString begin")
+    block(str)
+    println("printString end")
 }
 
 
