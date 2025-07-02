@@ -19,7 +19,7 @@ class RuntimePermissionActivity : AppCompatActivity() {
         callButton.setOnClickListener {
             if(ContextCompat.checkSelfPermission(this,Manifest.permission.CALL_PHONE) !=
             PackageManager.PERMISSION_GRANTED){
-                ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.CALL_PHONE,Manifest.permission.),1)
+                ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.CALL_PHONE),1)
             }else{
                 call()
             }
@@ -40,6 +40,7 @@ class RuntimePermissionActivity : AppCompatActivity() {
                     Toast.makeText(this,"you denied the permission",Toast.LENGTH_SHORT).show()
                 }
             }
+
         }
     }
 
